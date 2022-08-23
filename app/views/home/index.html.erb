@@ -1,0 +1,16 @@
+<h1>Stocking</h1>
+<%= form_tag root_path, :method => 'POST' do %>
+	<%= text_field_tag "ticker", nil, placeholder: "Entre símbolo - ticker", size: 50 %>
+	<%= submit_tag 'Buscar' %>
+<% end %>
+
+<% if @stock %>
+	<%= @stock.company_name %><br/> 
+	<%= @stock.latest_price %><br/> 
+<% elsif @nada %>
+	<%= @nada %>
+<% end %>
+
+<% if @error %>
+	<%= @error %>
+<% end %>

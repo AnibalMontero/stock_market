@@ -1,0 +1,38 @@
+
+<% begin %>
+  <% @ticker = StockQuote::Stock.quote(@stock.ticker) %>
+<% rescue => e %>
+  <% @ticker = nil %>
+<% end %>
+
+<% if @ticker == nil %>
+        El símbolo <%= @stock.ticker %> no existe </td>
+<% else %>
+
+<div class="card mb-3 text-white bg-primary" >
+  <div class="row g-0">
+    <div class="col-md-4">
+      <% @logo = StockQuote::Stock.logo(@stock.ticker) %>
+      <img src="<%= @logo.url %>" class="img-fluid rounded-start"> 
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><%= @ticker.company_name%></h5>
+        <% @info = StockQuote::Stock.company(@stock.ticker) %>
+        <p class="card-text"> <strong>Descripción:</strong> <%= @info.description %></p>
+        <p class="card-text"><small ><strong>Símbolo ticker:</strong> <%= @ticker.symbol %></small></p>
+        <p class="card-text"><small ><strong>Precio actual:</strong> $<%= number_with_precision(@ticker.latest_price, :precision =>2, :delimiter => ',') %></small></p>
+        <p class="card-text"><small ><strong>Capital:</strong> $<%= number_with_precision(@ticker.market_cap, :precision =>0, :delimiter => ',') %></small></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+        
+<% end %>
+
+<br/><br/>
+
+
+<%= link_to 'Edit', edit_stock_path(@stock) %> |
+<%= link_to 'Back', stocks_path %>
